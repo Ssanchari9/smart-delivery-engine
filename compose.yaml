@@ -1,0 +1,21 @@
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: smart-delivery-postgres
+    environment:
+      POSTGRES_DB: smart_delivery
+      POSTGRES_USER: delivery_app
+      POSTGRES_PASSWORD: local_dev_password
+    ports:
+    - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U delivery_app -d smart_delivery"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:

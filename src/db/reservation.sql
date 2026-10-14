@@ -1,0 +1,10 @@
+
+CREATE TABLE IF NOT EXISTS reservations (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    product_id BIGINT NOT NULL REFERENCES products(id),
+    warehouse_id BIGINT NOT NULL REFERENCES warehouses(id),
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    status VARCHAR(20) NOT NULL DEFAULT 'CONFIRMED'
+        CHECK (status IN ('CONFIRMED', 'CANCELLED')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
